@@ -69,90 +69,65 @@ php artisan serve
 Luego accede en tu navegador a http://localhost:8000.
 
 
-##Contacto
+## Contacto
 Si tienes sugerencias, encuentras errores o deseas contribuir al proyecto, puedes abrir un issue o enviar un pull request en este repositorio.
 También puedes contactarme directamente a través de mi perfil de GitHub.
 
-##Credits
+## Credits
 Tambien destacar que en este proyecto participo aparte de mi persona:
 Aldo Sandoval
 Cristian Calzadilla
 Gerardo Mendez
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-#Barbería Plus
+# Barbería Plus
 Barbería Plus is an appointment management system developed with Laravel 10, designed to optimize the management of appointments in hair salons and barber shops. It allows clients to easily schedule, cancel, or reschedule appointments, while staff (administrators and managers) efficiently manage services, schedules, users, and reports.
 
-##Main Features
+## Main Features
 Online appointment management: Clients can schedule, cancel, or modify appointments based on availability.
-
 Admin module: Manage services, users, schedules, and generate reports with advanced filters and PDF export.
-
 Manager panel: View and manage daily appointments, manually schedule new ones.
-
 Reports with charts: Appointment statistics by status using Chart.js.
-
 Security: Role-based access control (admin, manager, client) with mandatory password change on first login.
-
 Responsive design: Optimized for desktop, tablet, and mobile devices.
-
 Automation: Scheduler automatically marks overdue appointments as forgotten.
 
-##Technologies Used
+## Technologies Used
 Laravel 10
-
 Bootstrap 5
-
 Chart.js
-
 DomPDF (PDF generation)
-
 MySQL
-
 JavaScript (vanilla + Fetch API)
 
 ##Current Limitations
 No online payment support.
-
 No support for multiple branches (yet).
-
 No email or WhatsApp notifications implemented (could be extended in the future).
 
-##Requirements
+## Requirements
 PHP >= 8.1
-
 Composer
-
 MySQL or MariaDB
-
 Node.js + NPM (for compiling assets if necessary)
 
-##Installation and Setup
+## Installation and Setup
 Clone the repository: git clone https://github.com/your-username/barberia-plus.git and cd barberia-plus
-
 Install PHP dependencies: composer install
-
 Set up the environment file: copy .env.example to .env and configure your environment variables (database connection, etc.)
-
 Generate the application key: php artisan key:generate
-
 Run migrations and seeders: php artisan migrate --seed
-
 (Optional) Install Node dependencies and compile assets: npm install and npm run build
-
 Start the development server (XAMPP was used in this case): php artisan serve
-
 Open your browser and go to: http://localhost:8000
 
-##Contact
+## Contact
 If you have suggestions, encounter any bugs, or would like to contribute to the project, feel free to open an issue or submit a pull request on this repository.
 You can also contact me directly through my GitHub profile.
 
-##Credits
+## Credits
 This project was developed by myself, with contributions from:
 
 Aldo Sandoval
-
 Cristian Calzadilla
-
 Gerardo Mendez
