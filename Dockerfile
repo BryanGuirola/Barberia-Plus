@@ -19,7 +19,7 @@ COPY . .
 RUN composer install --no-dev --optimize-autoloader
 
 # Compilar assets (si usas Vite/Tailwind)
-RUN npm install && npm run build
+# RUN npm install && npm run build
 
 # Comandos de cacheo de Laravel
 RUN php artisan config:cache
