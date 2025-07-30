@@ -1,7 +1,7 @@
 services:
   - type: web
     name: barberia-plus
-    env: docker
+    env: php
     plan: free
     buildCommand: |
       composer install --no-dev --optimize-autoloader
@@ -10,4 +10,9 @@ services:
       php artisan db:seed --force
       npm install && npm run build
     startCommand: php artisan serve --host 0.0.0.0 --port $PORT
-
+    disk: 1G
+    healthCheckPath: /
+    routes:
+      - path: /
+        name: barberia-home
+        public: true
