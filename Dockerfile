@@ -1,10 +1,13 @@
-# Imagen base oficial de PHP con Composer incluido
+# Imagen base oficial de PHP
 FROM php:8.2-cli
 
-# Instalar dependencias necesarias
+# Instalar dependencias necesarias (Postgres, Node y herramientas para Composer)
 RUN apt-get update && apt-get install -y \
-    unzip git libpq-dev nodejs npm \
+    unzip git libpq-dev nodejs npm curl \
     && docker-php-ext-install pdo pdo_pgsql
+
+# Instalar Composer manualmente
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Configurar el directorio de trabajo
 WORKDIR /app
