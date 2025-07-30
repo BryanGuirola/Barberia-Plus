@@ -1,7 +1,7 @@
 services:
   - type: web
-    name: Barberia-Plus
-    env: PHP
+    name: barberia-plus
+    env: docker
     plan: free
     buildCommand: |
       composer install --no-dev --optimize-autoloader
@@ -9,4 +9,17 @@ services:
       php artisan migrate --force
       php artisan db:seed --force
       npm install && npm run build
-    startCommand: php artisan serve --host 0.0.0.0 --port 10000
+    startCommand: php artisan serve --host 0.0.0.0 --port $PORT
+    disk: 1G
+    healthCheckPath: /
+    routes:
+      - path: /
+        name: barberia-home
+        public: true
+
+  - type: postgres
+    name: barberia-db
+    plan: free
+    disk: 1G
+    databases:
+      - name: barberdb
