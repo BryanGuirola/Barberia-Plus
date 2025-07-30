@@ -1,7 +1,7 @@
 services:
   - type: web
     name: Barberia-Plus
-    env: php
+    env: PHP
     plan: free
     buildCommand: |
       composer install --no-dev --optimize-autoloader
