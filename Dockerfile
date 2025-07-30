@@ -15,13 +15,20 @@ WORKDIR /app
 # Copiar el proyecto completo
 COPY . .
 
+# 🔹 Dar permisos de escritura a storage y bootstrap/cache
+RUN chmod -R 775 storage bootstrap/cache
+
 # Instalar dependencias de PHP
 RUN composer install --no-dev --optimize-autoloader
 
-# Compilar assets (si usas Vite/Tailwind)
+# (opcional) Compilar assets si usas Vite/Tailwind
 # RUN npm install && npm run build
 
 # Comandos de cacheo de Laravel
+RUN php artisan config:clear
+RUN php artisan cache:clear
+RUN php artisan route:clear
+RUN php artisan view:clear
 RUN php artisan config:cache
 
 # Exponer el puerto (Render pasa $PORT automáticamente)
