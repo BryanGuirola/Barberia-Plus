@@ -1,27 +1,29 @@
-# Imagen base oficial con PHP, FPM y extensiones comunes
+# Imagen base oficial de PHP con FPM
 FROM php:8.2-fpm
 
-# Instalar dependencias necesarias del sistema
+# Instalar dependencias del sistema necesarias
 RUN apt-get update && apt-get install -y \
-    git unzip curl libpq-dev nodejs npm zip \
-    && docker-php-ext-install pdo pdo_pgsql
+    git unzip curl libpq-dev zip libzip-dev \
+    libxml2-dev libonig-dev nodejs npm \
+    && docker-php-ext-install pdo pdo_pgsql bcmath mbstring tokenizer ctype fileinfo zip
 
 # Instalar Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN curl -sS https://getcomposer.org/installer | php \
+    && mv composer.phar /usr/local/bin/composer
 
-# Directorio de trabajo
+# Establecer el directorio de trabajo
 WORKDIR /var/www/html
 
-# Copiar archivos del proyecto
+# Copiar los archivos del proyecto
 COPY . .
 
-# Dar permisos necesarios
+# Asegurar permisos a los directorios necesarios
 RUN chmod -R 775 storage bootstrap/cache
 
-# Instalar dependencias PHP
+# Instalar dependencias PHP (modo producción)
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-# Instalar y compilar assets si usas Vite
+# Instalar dependencias JS y compilar assets
 RUN npm install && npm run build
 
 # Cache de Laravel
@@ -33,7 +35,7 @@ RUN php artisan config:clear \
  && php artisan route:cache \
  && php artisan view:cache
 
-# Exponer puerto
+# Exponer puerto para Laravel serve
 EXPOSE 8000
 
 # Comando de inicio
