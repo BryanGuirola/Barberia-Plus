@@ -5,7 +5,8 @@ FROM php:8.2-fpm
 RUN apt-get update && apt-get install -y \
     git unzip curl libpq-dev zip libzip-dev \
     libxml2-dev libonig-dev nodejs npm \
-    && docker-php-ext-install pdo pdo_pgsql bcmath mbstring tokenizer ctype fileinfo zip
+    && docker-php-ext-install pdo pdo_pgsql bcmath mbstring ctype fileinfo zip
+
 
 # Instalar Composer
 RUN curl -sS https://getcomposer.org/installer | php \
