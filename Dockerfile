@@ -37,8 +37,6 @@ RUN php artisan config:clear \
  && php artisan route:cache \
  && php artisan view:cache
 
- #migrano a base de datos 
- RUN php artisan migrate:fresh --seed --force
 # Exponer puerto para Laravel serve
 EXPOSE 8000
 
