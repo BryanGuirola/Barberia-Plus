@@ -23,6 +23,7 @@ RUN chmod -R 775 storage bootstrap/cache
 # Instalar dependencias PHP (modo producción)
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
+
 # Instalar dependencias JS y compilar assets
 RUN npm install && npm run build
 
@@ -35,6 +36,8 @@ RUN php artisan config:clear \
  && php artisan route:cache \
  && php artisan view:cache
 
+ #migrano a base de datos 
+ RUN php artisan migrate:fresh --seed --force
 # Exponer puerto para Laravel serve
 EXPOSE 8000
 
