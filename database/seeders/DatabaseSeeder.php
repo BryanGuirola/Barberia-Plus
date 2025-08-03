@@ -54,7 +54,7 @@ class DatabaseSeeder extends Seeder
         }
 
         // Crear 20 clientes
-        $clientes = User::factory(20)->create([
+        $clientes = User::factory(5)->create([
             'rol' => 'cliente',
         ]);
 
