@@ -12,5 +12,8 @@ php artisan migrate --force
 # Ejecutar seeders
 php artisan db:seed --force
 
+# Muestra los últimos 20 renglones
+tail -n 30 storage/logs/laravel.log
+
 # Iniciar servidor Laravel
 php artisan serve --host=0.0.0.0 --port=$PORT
