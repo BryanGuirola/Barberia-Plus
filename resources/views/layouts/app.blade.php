@@ -13,7 +13,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+   @vite('resources/js/app.js')
 
     <style>
         label,
@@ -48,7 +48,7 @@
         @case('encargado')
         @include('layouts.partials.navbar_encargado')
         @break
-        @case('Admin')
+        @case('administrador')
         @include('layouts.partials.navbar_admin')
         @break
         @endswitch
