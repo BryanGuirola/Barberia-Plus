@@ -26,6 +26,9 @@ RUN php artisan config:clear \
 # MUESTRA en build qué extensiones están activas (opcional, para debugging)
 RUN php -m | grep -E 'pdo|pgsql'
 
-# Nota: agregamos implode o omitimos migraciones aquí (ver abajo)
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+
 EXPOSE 8000
+CMD ["/start.sh"]
 
