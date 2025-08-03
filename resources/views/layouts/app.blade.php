@@ -48,7 +48,7 @@
         @case('encargado')
         @include('layouts.partials.navbar_encargado')
         @break
-        @case('administrador')
+        @case('Admin')
         @include('layouts.partials.navbar_admin')
         @break
         @endswitch
