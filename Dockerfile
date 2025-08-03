@@ -28,4 +28,4 @@ RUN php -m | grep -E 'pdo|pgsql'
 
 # Nota: agregamos implode o omitimos migraciones aquí (ver abajo)
 EXPOSE 8000
-CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=$PORT
+
