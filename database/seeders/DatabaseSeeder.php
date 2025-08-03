@@ -25,30 +25,6 @@ class DatabaseSeeder extends Seeder
             'created_at'            => now(),
             'updated_at'            => now(),
         ]);
-
- 
-        if ($this->app->environment(['local', 'testing'])) {
-            // Crear encargados con factory
-            $encargados = collect();
-            for ($i = 1; $i <= 5; $i++) {
-                $encargados->push(User::factory()->create([
-                    'name'                  => "Encargado $i",
-                    'email'                 => "encargado$i@barberiaplus.com",
-                    'password'              => Hash::make('password'),
-                    'rol'                   => 'encargado',
-                    'must_change_password'  => true,
-                ]));
-            }
-
-            // Crear servicios
-            // ... tu lógica existente ...
-
-            // Crear clientes factory
-         
-            // Crear horarios y citas con factory/Carbon
-            // ... tu lógica existente ...
-        }
-
         // 3) Si quieres, dejar aquí otros inserciones estáticas que no usen Faker...
     }
 }
