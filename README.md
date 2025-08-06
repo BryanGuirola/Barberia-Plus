@@ -1,3 +1,86 @@
+# Barbería Plus
+
+**Barbería Plus** es un sistema de gestión de citas desarrollado en **Laravel 10**, diseñado para optimizar la administración de citas en peluquerías y barberías. Permite a los clientes agendar, cancelar o reprogramar citas de forma sencilla, mientras que el personal (administradores y encargados) gestiona servicios, horarios, usuarios y reportes de manera eficiente.
+
+---
+
+## Características principales
+
+- **Gestión de citas en línea:** Los clientes pueden agendar, cancelar o modificar citas según disponibilidad.
+- **Módulo administrativo:** El administrador gestiona servicios, usuarios, horarios y genera reportes con filtros avanzados y exportación a PDF.
+- **Panel para encargados:** Visualización y gestión de citas diarias, agendado manual.
+- **Reportes con gráficos:** Estadísticas de citas por estado mediante **Chart.js**.
+- **Seguridad:** Control de acceso por roles (admin, encargado, cliente), cambio obligatorio de contraseña en primer login.
+- **Diseño responsivo:** Optimizado para computadoras, tablets y móviles.
+- **Automatización:** Scheduler que marca automáticamente las citas vencidas como olvidadas.
+
+---
+
+## Tecnologías utilizadas
+
+- Laravel 10
+- Bootstrap 5
+- Chart.js
+- DomPDF (PDFs)
+- MySQL
+- JavaScript (vanilla + Fetch API)
+
+---
+
+## Limitaciones actuales
+
+- No incluye pagos en línea.
+- No soporta múltiples sucursales (por ahora).
+- No implementa notificaciones por correo o WhatsApp (se podría extender).
+
+---
+
+## Requisitos
+
+- PHP >= 8.1
+- Composer
+- MySQL o MariaDB
+- Node.js + NPM (para compilar assets si es necesario)
+
+---
+
+## Instalación y configuración
+
+Sigue los siguientes pasos para instalar y ejecutar el proyecto en tu entorno local.
+
+### 1. Clonar el repositorio
+git clone https://github.com/tu-usuario/barberia-plus.git
+cd barberia-plus
+### 2. Instalar dependencias de PHP
+composer install
+### 3. Configurar el archivo de entorno
+cp .env.example .env
+Edita el archivo .env para configurar los datos de conexión de la base de datos y otras variables necesarias.
+
+### 4. Generar la clave de la aplicación
+php artisan key:generate
+### 5. Ejecutar migraciones y seeders
+php artisan migrate --seed
+### 6. (Opcional) Instalar dependencias de Node y compilar assets
+npm install
+npm run build
+### 7. Iniciar el servidor de desarrollo(yo utilice XAMP)
+php artisan serve
+Luego accede en tu navegador a http://localhost:8000.
+
+ademas de esto tengo este sitio publicado puedes verlo en este link :https://barberia-plus.onrender.com/ 
+
+
+Contacto
+Si tienes sugerencias, encuentras errores o deseas contribuir al proyecto, puedes abrir un issue o enviar un pull request en este repositorio.
+También puedes contactarme directamente a través de mi perfil de GitHub.
+
+Tambien destacar que en este proyecto participo aparte de mi persona:
+Aldo Sandoval
+Cristian Calzadilla 
+Gerardo Mendez
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
