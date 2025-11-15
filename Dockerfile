@@ -4,7 +4,7 @@ FROM php:8.2-apache
 # Cloud Run usa la variable $PORT, aseguramos que tenga valor 8080 por defecto
 ENV PORT=8080
 
-# Instalar extensiones necesarias (🔥 CORREGIDO pdo_pgsql)
+# Instalar extensiones necesarias (incluye pdo_pgsql)
 RUN apt-get update && apt-get install -y \
     git curl unzip libpq-dev zip npm \
     && docker-php-ext-configure pdo_pgsql \
@@ -36,10 +36,14 @@ RUN chown -R www-data:www-data storage bootstrap/cache
 # Asegurar que Apache use el docroot correcto
 RUN sed -i "s|/var/www/html|/var/www/public|g" /etc/apache2/sites-available/000-default.conf
 
-# Exponer el puerto real
+# Copiar start.sh
+COPY start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
+
+# Exponer puerto
 EXPOSE 8080
 
-# Start command
-CMD ["apache2ctl", "-D", "FOREGROUND"]
+# Usar start.sh como entrada
+CMD ["sh", "/usr/local/bin/start.sh"]
 
 
