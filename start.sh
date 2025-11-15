@@ -4,7 +4,7 @@
 php artisan migrate --force &
 
 # Opcional: seeds
-# php artisan db:seed --force &
+php artisan db:seed --force &
 
 # --- Iniciar Apache ---
 apache2ctl -D FOREGROUND
