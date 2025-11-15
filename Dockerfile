@@ -36,14 +36,12 @@ RUN chown -R www-data:www-data storage bootstrap/cache
 # Asegurar que Apache use el docroot correcto
 RUN sed -i "s|/var/www/html|/var/www/public|g" /etc/apache2/sites-available/000-default.conf
 
-# Copiar start.sh
-COPY start.sh /usr/local/bin/start.sh
-RUN chmod +x /usr/local/bin/start.sh
-
-# Exponer puerto
+# Exponer el puerto real
 EXPOSE 8080
 
-# Usar start.sh como entrada
-CMD ["sh", "/usr/local/bin/start.sh"]
+# Start script
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+CMD ["/start.sh"]
 
 
