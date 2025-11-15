@@ -1,34 +1,40 @@
-FROM php:8.2-cli
+FROM php:8.2-fpm
 
+# Dependencias necesarias
 RUN apt-get update && apt-get install -y \
-    unzip git curl libpq-dev nodejs npm zip \
- && docker-php-ext-install pdo_pgsql pgsql
+    git curl unzip libpq-dev zip nodejs npm \
+    && docker-php-ext-install pdo_pgsql
 
-RUN curl -sS https://getcomposer.org/installer | php \
- && mv composer.phar /usr/local/bin/composer
+# Composer global
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-WORKDIR /app
+WORKDIR /var/www
+
+# Copiar proyecto
 COPY . .
 
+# Permisos
 RUN chmod -R 775 storage bootstrap/cache
+
+# Instalar dependencias de PHP
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-RUN npm install && npm run build  
+# Instalar y compilar frontend
+RUN npm install && npm run build
 
-RUN php artisan config:clear \
- && php artisan route:clear \
- && php artisan view:clear \
- && php artisan cache:clear \
- && php artisan config:cache \
- && php artisan route:cache \
- && php artisan view:cache
+# Generar app key (si no existe)
+RUN php artisan key:generate
 
-# MUESTRA en build qué extensiones están activas (opcional, para debugging)
-RUN php -m | grep -E 'pdo|pgsql'
+# Crear storage link
+RUN php artisan storage:link || true
 
-COPY start.sh /start.sh
-RUN chmod +x /start.sh
+# Construir caches
+RUN php artisan config:clear
+RUN php artisan config:cache
+RUN php artisan route:cache
+RUN php artisan view:cache
 
-EXPOSE 8000
-CMD ["/start.sh"]
+# Exponer puerto FPM
+EXPOSE 9000
 
+CMD ["php-fpm"]
