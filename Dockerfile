@@ -4,9 +4,10 @@ FROM php:8.2-apache
 # Cloud Run usa la variable $PORT, aseguramos que tenga valor 8080 por defecto
 ENV PORT=8080
 
-# Instalar extensiones necesarias
+# Instalar extensiones necesarias (🔥 CORREGIDO pdo_pgsql)
 RUN apt-get update && apt-get install -y \
     git curl unzip libpq-dev zip npm \
+    && docker-php-ext-configure pdo_pgsql \
     && docker-php-ext-install pdo_pgsql
 
 # Habilitar módulos necesarios de Apache
