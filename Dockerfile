@@ -1,15 +1,22 @@
 # Imagen base con Apache + PHP 8.2
 FROM php:8.2-apache
 
+# Cloud Run usa la variable $PORT, aseguramos que tenga valor 8080 por defecto
+ENV PORT=8080
+
 # Instalar extensiones necesarias
 RUN apt-get update && apt-get install -y \
     git curl unzip libpq-dev zip npm \
     && docker-php-ext-install pdo_pgsql
 
-# Habilitar mod_rewrite
+# Habilitar módulos necesarios de Apache
 RUN a2enmod rewrite headers
 
-# Copiar el proyecto
+# Ajustar Apache para escuchar en $PORT
+RUN sed -i "s/Listen 80/Listen ${PORT}/" /etc/apache2/ports.conf \
+    && sed -i "s/:80/:${PORT}/g" /etc/apache2/sites-available/000-default.conf
+
+# Copiar proyecto
 WORKDIR /var/www
 COPY . .
 
@@ -22,18 +29,16 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction
 # Compilar Vite
 RUN npm install && npm run build
 
-# Permisos
+# Permisos Laravel
 RUN chown -R www-data:www-data storage bootstrap/cache
 
-# Copiar configuración Apache
-COPY apache.conf /etc/apache2/sites-available/000-default.conf
+# Asegurar que Apache use el docroot correcto
+RUN sed -i "s|/var/www/html|/var/www/public|g" /etc/apache2/sites-available/000-default.conf
 
-# Start script
-COPY start.sh /start.sh
-RUN chmod +x /start.sh
-
+# Exponer el puerto real
 EXPOSE 8080
 
-CMD ["/start.sh"]
+# Start command
+CMD ["apache2ctl", "-D", "FOREGROUND"]
 
 
