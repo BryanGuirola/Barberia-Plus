@@ -1,19 +1,7 @@
 #!/bin/sh
 
-# Esperar a que la base de datos esté lista
-sleep 10
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
 
-# Limpiar caché de configuración (por si cambiaste env)
-php artisan config:clear
-
-# Ejecutar migraciones
-php artisan migrate --force
-
-# Ejecutar seeders
-php artisan db:seed --force
-
-# Muestra los últimos 20 renglones
-tail -n 30 storage/logs/laravel.log
-
-# Iniciar servidor Laravel
-php artisan serve --host=0.0.0.0 --port=$PORT
+apachectl -D FOREGROUND
