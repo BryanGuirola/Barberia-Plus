@@ -1,6 +1,10 @@
-#!/bin/sh
-php artisan config:cache || true
-php artisan route:cache || true
-php artisan view:cache || true
+#!/bin/bash
 
-apachectl -D FOREGROUND
+# --- Ejecutar migraciones en segundo plano ---
+php artisan migrate --force &
+
+# Opcional: seeds
+# php artisan db:seed --force &
+
+# --- Iniciar Apache ---
+apache2ctl -D FOREGROUND
