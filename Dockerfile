@@ -1,50 +1,39 @@
-# --- Imagen base PHP FPM ---
-FROM php:8.2-fpm
+# Imagen base con Apache + PHP 8.2
+FROM php:8.2-apache
 
-# --- Instalar dependencias del sistema ---
+# Instalar extensiones necesarias
 RUN apt-get update && apt-get install -y \
-    git curl unzip libpq-dev zip nodejs npm \
+    git curl unzip libpq-dev zip npm \
     && docker-php-ext-install pdo_pgsql
 
-# --- Instalar Composer global ---
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+# Habilitar mod_rewrite
+RUN a2enmod rewrite headers
 
-# --- Directorio raíz del proyecto ---
+# Copiar el proyecto
 WORKDIR /var/www
-
-# --- Copiar proyecto ---
 COPY . .
 
-# --- Crear .env desde .env.example ---
-RUN cp .env.example .env
+# Instalar composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# --- Permisos de Laravel ---
-RUN chmod -R 775 storage bootstrap/cache
-
-# --- Instalar dependencias PHP ---
+# Instalar dependencias PHP
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-# --- Compilar frontend (Vite) ---
+# Compilar Vite
 RUN npm install && npm run build
 
-# --- Generar clave APP_KEY dentro del contenedor ---
-RUN php artisan key:generate
+# Permisos
+RUN chown -R www-data:www-data storage bootstrap/cache
 
-# --- Limpiar y generar caches ---
-RUN php artisan config:clear \
- && php artisan route:clear \
- && php artisan view:clear \
- && php artisan cache:clear \
- && php artisan config:cache \
- && php artisan route:cache \
- && php artisan view:cache
+# Copiar configuración Apache
+COPY apache.conf /etc/apache2/sites-available/000-default.conf
 
-# --- Crear storage link (si falla, continuar) ---
-RUN php artisan storage:link || true
+# Start script
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
 
-# --- Exponer el puerto FPM ---
-EXPOSE 9000
+EXPOSE 8080
 
-# --- Iniciar PHP-FPM ---
-CMD ["php-fpm", "-F"]
+CMD ["/start.sh"]
+
 
